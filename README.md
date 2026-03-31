@@ -87,6 +87,8 @@ Each generated file is shown (or diffed against the existing version) before wri
 
 For Google Workspace CLI setup (gcloud project, OAuth scopes), see [Google Workspace Setup](setup/claude_google.md).
 
+For Slack app setup (scopes, tokens, team ID), see [Slack App Setup](setup/claude_slack.md).
+
 ### 3. Set up secrets
 
 Create `.env` in the repo root (the setup script creates a stub if one doesn't exist):
@@ -191,6 +193,7 @@ $REPO/                             ← this repo
 │   ├── configure.sh               ← non-interactive: project paths in .claude/
 │   ├── init-state.sh              ← non-interactive: creates state files for jobs
 │   ├── claude_google.md           ← Google Workspace / gws setup guide
+│   ├── claude_slack.md            ← Slack app setup guide
 │   ├── settings.json              ← template for ~/.claude/settings.json
 │   ├── guard-secrets-global.sh    ← template for ~/.claude/scripts/
 │   └── templates/claude/          ← source templates for .claude/
