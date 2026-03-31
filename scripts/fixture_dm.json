@@ -1,0 +1,151 @@
+{
+  "ok": true,
+  "query": "is:dm after:2026-03-22",
+  "messages": {
+    "total": 2,
+    "pagination": {
+      "total_count": 2,
+      "page": 1,
+      "per_page": 20,
+      "page_count": 1,
+      "first": 1,
+      "last": 2
+    },
+    "paging": {
+      "count": 20,
+      "total": 2,
+      "page": 1,
+      "pages": 1
+    },
+    "matches": [
+      {
+        "iid": "00000000-0000-0000-0000-000000000001",
+        "team": "T00000000001",
+        "score": 0,
+        "channel": {
+          "id": "D000000001",
+          "is_channel": false,
+          "is_group": false,
+          "is_im": true,
+          "is_mpim": false,
+          "is_shared": false,
+          "is_org_shared": false,
+          "is_ext_shared": false,
+          "is_private": true,
+          "name": "U000000002",
+          "user": "U000000002"
+        },
+        "type": "im",
+        "user": "U000000002",
+        "username": "alice",
+        "ts": "1774278076.248749",
+        "blocks": [
+          {
+            "type": "rich_text",
+            "block_id": "blk01",
+            "elements": [
+              {
+                "type": "rich_text_section",
+                "elements": [
+                  {
+                    "type": "text",
+                    "text": "Hey, good morning!"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "text": "Hey, good morning!",
+        "permalink": "https://example-workspace.slack.com/archives/D000000001/p1774278076248749",
+        "no_reactions": true
+      },
+      {
+        "iid": "00000000-0000-0000-0000-000000000002",
+        "team": "T00000000001",
+        "score": 0,
+        "channel": {
+          "id": "D000000001",
+          "is_channel": false,
+          "is_group": false,
+          "is_im": true,
+          "is_mpim": false,
+          "is_shared": false,
+          "is_org_shared": false,
+          "is_ext_shared": false,
+          "is_private": true,
+          "name": "U000000002",
+          "user": "U000000002"
+        },
+        "type": "im",
+        "user": "U000000002",
+        "username": "alice",
+        "ts": "1774278082.345789",
+        "blocks": [
+          {
+            "type": "rich_text",
+            "block_id": "blk02",
+            "elements": [
+              {
+                "type": "rich_text_section",
+                "elements": [
+                  {
+                    "type": "text",
+                    "text": "The new staging link is here: "
+                  },
+                  {
+                    "type": "link",
+                    "url": "https://staging.example.com/"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "text": "The new staging link is here: <https://staging.example.com/>",
+        "permalink": "https://example-workspace.slack.com/archives/D000000001/p1774278082345789",
+        "no_reactions": true
+      }
+    ]
+  },
+  "users": {
+    "U000000002": {
+      "id": "U000000002",
+      "name": "alice",
+      "is_restricted": false,
+      "is_ultra_restricted": false,
+      "profile": {
+        "avatar_hash": "abc123def456",
+        "image_72": "https://avatars.slack-edge.com/example_72.jpg",
+        "first_name": "Alice",
+        "real_name": "Alice Example",
+        "display_name": "",
+        "team": "T00000000001"
+      }
+    }
+  },
+  "teams": {},
+  "bots": {},
+  "response_metadata": {
+    "scopes": [
+      "identify",
+      "channels:history",
+      "groups:history",
+      "im:history",
+      "mpim:history",
+      "channels:read",
+      "files:read",
+      "groups:read",
+      "im:read",
+      "mpim:read",
+      "reactions:read",
+      "search:read",
+      "users:read",
+      "users.profile:read",
+      "chat:write"
+    ],
+    "acceptedScopes": [
+      "search:read"
+    ]
+  }
+}

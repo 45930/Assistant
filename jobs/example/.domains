@@ -1,0 +1,9 @@
+# Extra domains for the example job (beyond _base/.domains).
+# One domain per line. Leading dot = domain + all subdomains.
+#
+# The runner merges this with _base/.domains at startup to generate
+# the squid proxy allowlist and the guard hook's curl allowlist.
+# No need to repeat base domains — they're included automatically.
+
+.example.com
+.httpbin.org

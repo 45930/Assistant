@@ -1,0 +1,22 @@
+{
+  "name": "tracker-scripts",
+  "version": "1.0.0",
+  "description": "Tracker automation scripts",
+  "scripts": {
+    "slack": "tsx slack_pull.ts",
+    "slack:json": "tsx slack_pull.ts --json",
+    "slack:dry": "tsx slack_pull.ts --dry-run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0"
+  }
+}

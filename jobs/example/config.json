@@ -1,0 +1,4 @@
+{
+  "example_setting": true,
+  "description": "This file is mounted read-only at /config/config.json inside the container."
+}

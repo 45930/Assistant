@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "query": "(in:#team-ocaml-node OR in:#hf-mesa-upgrade) after:2026-03-22",
+  "messages": {
+    "total": 0,
+    "pagination": {
+      "total_count": 0,
+      "page": 1,
+      "per_page": 5,
+      "page_count": 0,
+      "first": 1,
+      "last": 0
+    },
+    "paging": {
+      "count": 5,
+      "total": 0,
+      "page": 1,
+      "pages": 0
+    },
+    "matches": []
+  },
+  "users": {},
+  "teams": {},
+  "bots": {},
+  "response_metadata": {
+    "scopes": [
+      "identify",
+      "channels:history",
+      "groups:history",
+      "im:history",
+      "mpim:history",
+      "channels:read",
+      "files:read",
+      "groups:read",
+      "im:read",
+      "mpim:read",
+      "reactions:read",
+      "search:read",
+      "stars:read",
+      "users:read",
+      "usergroups:read",
+      "users.profile:read",
+      "channels:write",
+      "chat:write",
+      "files:write",
+      "reactions:write",
+      "stars:write",
+      "usergroups:write",
+      "users.profile:write"
+    ],
+    "acceptedScopes": [
+      "search:read"
+    ]
+  }
+}

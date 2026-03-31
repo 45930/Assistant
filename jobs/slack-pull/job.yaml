@@ -1,0 +1,23 @@
+name: slack-pull
+description: "Pull Slack DMs, mentions, and watched channel messages"
+schedule: "0 * * * *"
+
+entrypoint: ./entrypoint.sh
+timeout: 300
+uses_claude: false
+
+env:
+  - SLACK_USER_TOKEN
+  - SLACK_BOT_TOKEN
+  - SLACK_TEAM_ID
+
+volumes:
+  - host: ./scripts/config.json
+    container: /config/config.json
+  - host: ./scripts/slack_pull.ts
+    container: /workspace/scripts/slack_pull.ts
+
+state:
+  - .last_run
+
+mount_gws: false

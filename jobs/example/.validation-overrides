@@ -1,0 +1,15 @@
+# Validation pattern overrides for the example job.
+# One pattern name per line. Lines starting with # are comments.
+#
+# Use this when your job's output legitimately triggers false positives
+# in the prompt injection scanner. Only suppress patterns you understand.
+#
+# Available patterns:
+#   instruction_override  system_prompt  role_hijack  tool_injection
+#   prompt_leak  exfil_curl  exfil_base64  exfil_webhook  encoded_payload
+#   code_exec  script_tag  shell_injection  path_traversal  file_write
+#   invisible_text  zero_width
+
+# Example: this job fetches web content that may contain curl commands
+exfil_curl
+shell_injection

@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "additionalDirectories": [
+      "{{PROJECTS_DIR}}",
+      "{{MEMORY_DIR}}"
+    ]
+  },
+  "sandbox": {
+    "filesystem": {
+      "allowWrite": [
+        "{{PROJECTS_DIR}}",
+        "{{MEMORY_DIR}}"
+      ]
+    }
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read|Write|Edit|Glob|Grep|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{REPO_DIR}}/.claude/scripts/guard-secrets.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{REPO_DIR}}/.claude/scripts/guard-memory-injection.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

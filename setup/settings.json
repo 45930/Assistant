@@ -1,0 +1,50 @@
+{
+  "_comment": "Global Claude Code settings. Copy to ~/.claude/settings.json. Update /home/user to your actual home directory in the deny rules below.",
+  "permissions": {
+    "deny": [
+      "Read(/home/user/.ssh/**)",
+      "Read(/home/user/.gnupg/**)",
+      "Read(/home/user/.aws/**)",
+      "Read(/home/user/.config/**)",
+      "Read(/home/user/.kube/**)",
+      "Read(/home/user/.docker/**)",
+      "Read(/home/user/.npm/**)",
+      "Read(/home/user/.node_repl_history)",
+      "Read(/home/user/.bash_history)",
+      "Read(/home/user/.zsh_history)",
+      "Read(**/.env)",
+      "Read(**/.mcp.json)",
+      "Read(**/secrets/**)",
+      "Read(**/*.key)",
+      "Read(**/*.pem)",
+      "Read(**/auth.json)",
+      "Read(**/auth-profiles.json)",
+      "Read(**/credentials/**)",
+      "Edit(**/.env)",
+      "Edit(**/.mcp.json)",
+      "Edit(**/secrets/**)",
+      "Edit(**/*.key)",
+      "Edit(**/*.pem)",
+      "Write(**/.env)",
+      "Write(**/.mcp.json)",
+      "Write(**/secrets/**)",
+      "Write(**/*.key)",
+      "Write(**/*.pem)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read|Write|Edit|Bash|Glob|Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/user/.claude/scripts/guard-secrets-global.sh",
+            "timeout": 5,
+            "statusMessage": "Checking secrets guard..."
+          }
+        ]
+      }
+    ]
+  }
+}

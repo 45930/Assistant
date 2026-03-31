@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(/home/**/.ssh/**)",
+      "Read(/home/**/.gnupg/**)",
+      "Read(/home/**/.aws/**)",
+      "Read(/home/**/.config/**)",
+      "Read(**/.env)",
+      "Read(**/*.key)",
+      "Read(**/*.pem)",
+      "Read(**/auth.json)",
+      "Read(**/credentials/**)",
+      "Write(/home/**)",
+      "Write(/etc/**)",
+      "Write(/tmp/**)",
+      "Edit(/home/**)",
+      "Edit(/etc/**)"
+    ],
+    "allow": [
+      "Write(/workspace/quarantine/**)",
+      "Edit(/workspace/quarantine/**)",
+      "Read(/workspace/**)",
+      "Read(/config/**)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read|Write|Edit|Bash|Glob|Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/workspace/.claude/scripts/guard-secrets-ingest.sh",
+            "timeout": 5,
+            "statusMessage": "Ingest guard check..."
+          }
+        ]
+      }
+    ]
+  }
+}

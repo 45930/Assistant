@@ -1,0 +1,40 @@
+name: example
+description: "Example job demonstrating all per-job features — use as a template"
+
+# Cron schedule (this one runs daily at 9am ET).
+# See https://crontab.guru for syntax.
+schedule: "0 9 * * *"
+
+entrypoint: ./entrypoint.sh
+timeout: 300          # seconds before container is killed
+
+uses_claude: true     # Run a headless Claude agent (requires ANTHROPIC_API_KEY)
+mount_gws: true       # Mount Google Workspace credentials into the container
+
+# Environment variables passed from .env into the container.
+# Values come from the repo root .env file — list only the names here.
+env:
+  - ANTHROPIC_API_KEY
+
+# Read-only files mounted into the container at /config/.
+# Use $REPO for the repo root, $HOME for home dir, ./ for job dir.
+volumes:
+  - host: $REPO/context/priorities.md
+    container: /config/priorities.md
+  - host: ./config.json
+    container: /config/config.json
+
+# Files that persist across runs. Stored in the job directory, mounted
+# read-only at /config/state/<name>. Write updated versions to
+# /workspace/quarantine/state/<name> and the runner promotes them back.
+state:
+  - .last_run
+
+# Resource limits for the job container.
+resources:
+  memory: "512M"
+  cpus: "1.0"
+
+# Custom Dockerfile for extra system dependencies (optional).
+# Omit this line to use the shared base image.
+dockerfile: ./Dockerfile

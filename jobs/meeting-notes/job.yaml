@@ -1,0 +1,22 @@
+name: meeting-notes
+description: "Fetch meeting notes from Ambient and Google Docs, write context and memory updates"
+schedule: "0 13,20 * * *"
+
+entrypoint: ./entrypoint.sh
+timeout: 600
+uses_claude: true
+
+env:
+  - ANTHROPIC_API_KEY
+  - AMBIENT_API_KEY
+
+volumes:
+  - host: $REPO/context/priorities.md
+    container: /config/priorities.md
+  - host: $REPO/context/docs.md
+    container: /config/docs.md
+
+state:
+  - .last_run
+
+mount_gws: true

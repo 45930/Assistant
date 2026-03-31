@@ -1,0 +1,23 @@
+name: email-calendar
+description: "Fetch new emails and calendar events via headless Claude agent"
+schedule: "0 * * * *"
+
+entrypoint: ./entrypoint.sh
+timeout: 600
+uses_claude: true
+
+env:
+  - ANTHROPIC_API_KEY
+
+volumes:
+  - host: $REPO/context/priorities.md
+    container: /config/priorities.md
+  - host: $REPO/context/docs.md
+    container: /config/docs.md
+  - host: $REPO/context/todos.md
+    container: /config/todos.md
+
+state:
+  - .last_run_email
+
+mount_gws: true

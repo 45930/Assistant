@@ -1,0 +1,113 @@
+{
+  "ok": true,
+  "query": "<@U000000001> after:2026-03-22",
+  "messages": {
+    "total": 1,
+    "pagination": {
+      "total_count": 1,
+      "page": 1,
+      "per_page": 20,
+      "page_count": 1,
+      "first": 1,
+      "last": 1
+    },
+    "paging": {
+      "count": 20,
+      "total": 1,
+      "page": 1,
+      "pages": 1
+    },
+    "matches": [
+      {
+        "iid": "00000000-0000-0000-0000-000000000010",
+        "team": "T00000000001",
+        "score": 0,
+        "channel": {
+          "id": "C000000001",
+          "is_channel": true,
+          "is_group": false,
+          "is_im": false,
+          "is_mpim": false,
+          "is_shared": false,
+          "is_org_shared": false,
+          "is_ext_shared": false,
+          "is_private": false,
+          "name": "engineering",
+          "pending_shared": [],
+          "is_pending_ext_shared": false,
+          "teams": [
+            "T00000000001"
+          ]
+        },
+        "type": "message",
+        "user": "U000000003",
+        "username": "bob",
+        "ts": "1774289915.395339",
+        "blocks": [
+          {
+            "type": "rich_text",
+            "block_id": "blk10",
+            "elements": [
+              {
+                "type": "rich_text_section",
+                "elements": [
+                  {
+                    "type": "user",
+                    "user_id": "U000000001"
+                  },
+                  {
+                    "type": "text",
+                    "text": " can you take a look at the PR when you get a chance?"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "text": "<@U000000001> can you take a look at the PR when you get a chance?",
+        "permalink": "https://example-workspace.slack.com/archives/C000000001/p1774289915395339",
+        "no_reactions": true
+      }
+    ]
+  },
+  "users": {
+    "U000000003": {
+      "id": "U000000003",
+      "name": "bob",
+      "is_restricted": false,
+      "is_ultra_restricted": false,
+      "profile": {
+        "avatar_hash": "def456abc789",
+        "image_72": "https://avatars.slack-edge.com/example2_72.jpg",
+        "first_name": "Bob",
+        "real_name": "Bob Example",
+        "display_name": "",
+        "team": "T00000000001"
+      }
+    }
+  },
+  "teams": {},
+  "bots": {},
+  "response_metadata": {
+    "scopes": [
+      "identify",
+      "channels:history",
+      "groups:history",
+      "im:history",
+      "mpim:history",
+      "channels:read",
+      "files:read",
+      "groups:read",
+      "im:read",
+      "mpim:read",
+      "reactions:read",
+      "search:read",
+      "users:read",
+      "users.profile:read",
+      "chat:write"
+    ],
+    "acceptedScopes": [
+      "search:read"
+    ]
+  }
+}
