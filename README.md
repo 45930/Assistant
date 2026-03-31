@@ -187,11 +187,8 @@ $REPO/                             ← this repo
 │   ├── email-calendar/            ← job: email/calendar ingest
 │   └── meeting-notes/             ← job: meeting notes from Ambient/Google Docs
 ├── scripts/                       ← shared scripts and fixtures (committed)
-├── setup/                         ← install + configure scripts
+├── setup/                         ← setup scripts and guides
 │   ├── setup.sh                   ← interactive setup (run this first)
-│   ├── install.sh                 ← non-interactive: global config to ~/.claude/
-│   ├── configure.sh               ← non-interactive: project paths in .claude/
-│   ├── init-state.sh              ← non-interactive: creates state files for jobs
 │   ├── claude_google.md           ← Google Workspace / gws setup guide
 │   ├── claude_slack.md            ← Slack app setup guide
 │   ├── settings.json              ← template for ~/.claude/settings.json

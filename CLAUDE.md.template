@@ -2,6 +2,36 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Development
+
+### Tests
+
+```bash
+bash tests/run_tests.sh           # full suite
+bash tests/test_setup.sh          # single test file
+```
+
+Tests are bash scripts using `tests/test_helpers.sh` for assertions. CI runs on Ubuntu + macOS via `.github/workflows/tests.yml`. Guard hook tests use `json_file_tool()`, `json_bash_tool()`, etc. to build tool-use JSON, then `run_guard()` + `is_blocked()` to verify.
+
+### Jobs
+
+```bash
+jobs/_runner/run-job.sh --build-base       # build shared Docker image
+jobs/_runner/run-job.sh <job-name>         # run a job (e.g. slack-pull)
+jobs/_runner/run-job.sh --install-cron     # install cron schedules from job.yaml
+jobs/_runner/create-job.sh <name>          # scaffold a new job
+```
+
+Job output lands in `context/quarantine/<job>/`. After validation, context files promote to `context/`, memory observations route to `context/inbox/`.
+
+### Setup
+
+```bash
+./setup/setup.sh                          # interactive first-time setup
+```
+
+This generates CLAUDE.md (from `CLAUDE.md.template`), `.claude/` config, `jobs/org.yaml`, `.env` stub, context dirs, and memory dirs — with a preview and confirmation before every file write.
+
 ## Soul
 
 <!-- Customize this section. Tell Claude who you are, what you do, and how you want it to work with you. -->
