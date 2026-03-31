@@ -70,17 +70,26 @@ git clone <repo-url> $REPO
 cd $REPO
 ```
 
-### 2. Create a projects directory
+### 2. Run the setup script
 
-This is where you keep code repos you want the chief of staff to have access to. It can contain anything — the system can read and write these.
+The interactive setup walks through the entire configuration — prerequisites, paths, secrets, Claude config, Google auth, Docker, and cron — with a preview and confirmation before every file write.
 
 ```bash
-mkdir -p $PROJECTS
+./setup/setup.sh
 ```
+
+It will prompt you for:
+- **Projects directory** — where your code repos live (default: `~/projects`)
+- **Name, role, company, email domain, timezone** — used to generate `CLAUDE.md` and `jobs/org.yaml`
+- **Google Tasks list IDs** — optional, for to-do sync
+
+Each generated file is shown (or diffed against the existing version) before writing. Safe to re-run.
+
+For Google Workspace CLI setup (gcloud project, OAuth scopes), see [Google Workspace Setup](setup/claude_google.md).
 
 ### 3. Set up secrets
 
-Create `.env` in the repo root (gitignored):
+Create `.env` in the repo root (the setup script creates a stub if one doesn't exist):
 
 ```bash
 cat > .env << 'EOF'
@@ -119,41 +128,7 @@ Create `.mcp.json` in the repo root (gitignored):
 }
 ```
 
-### 4. Set up global Claude config
-
-Claude Code has two layers of settings: **global** (`~/.claude/`) applies to all projects, and **project** (`.claude/` in the repo) applies only here. Both are needed.
-
-Run the install script:
-
-```bash
-./setup/install.sh
-```
-
-This copies the global guard script and settings to `~/.claude/`. Review `~/.claude/settings.json` afterward — it affects all your Claude Code sessions.
-
-**What the global settings do:**
-- `permissions.deny` blocks Read/Write/Edit on `~/.ssh`, `~/.aws`, `~/.gnupg`, `~/.config`, `.env`, `*.key`, `*.pem` across all projects
-- The global guard hook blocks Bash commands that dump env vars, echo secrets, or exfiltrate via curl
-
-### 5. Configure project paths
-
-The project-level settings need your actual `$REPO`, `$PROJECTS`, and `$MEMORY` paths. Run:
-
-```bash
-./setup/configure.sh $REPO $PROJECTS
-```
-
-This copies templates from `setup/templates/claude/` into `.claude/` (skills, guard scripts, settings) and substitutes your paths. Safe to re-run — it overwrites `.claude/` each time. To customize skills or guard scripts, edit the files in `.claude/` after running this step.
-
-### 6. Authenticate Google Workspace CLI
-
-```bash
-gws auth login
-```
-
-This creates OAuth credentials at `~/.config/gws/`. Job containers mount this directory read-only.
-
-### 7. Install local dependencies
+### 4. Install local dependencies
 
 ```bash
 cd $REPO/jobs/slack-pull/scripts
@@ -161,21 +136,7 @@ npm install
 cd $REPO
 ```
 
-### 8. Build the job base image
-
-```bash
-jobs/_runner/run-job.sh --build-base
-```
-
-### 9. Initialize state files
-
-The job runner expects state files to exist (Docker bind-mounts fail on missing files):
-
-```bash
-./setup/init-state.sh
-```
-
-### 10. Test the job runner
+### 5. Test the job runner
 
 ```bash
 # Test Slack pull
@@ -187,15 +148,7 @@ jobs/_runner/run-job.sh email-calendar
 
 Check `context/quarantine/<job-name>/.job.log` for results. Validated context files land in `context/`, memory files in `context/inbox/`.
 
-### 11. Install per-job cron schedules
-
-```bash
-jobs/_runner/run-job.sh --install-cron
-```
-
-This reads each job's `job.yaml` schedule and writes crontab entries automatically.
-
-### 12. Add a new job
+### 6. Add a new job
 
 ```bash
 jobs/_runner/create-job.sh my-new-job
@@ -233,9 +186,11 @@ $REPO/                             ← this repo
 │   └── meeting-notes/             ← job: meeting notes from Ambient/Google Docs
 ├── scripts/                       ← shared scripts and fixtures (committed)
 ├── setup/                         ← install + configure scripts
-│   ├── install.sh                 ← copies global config to ~/.claude/
-│   ├── configure.sh               ← copies templates → .claude/, substitutes paths
-│   ├── init-state.sh              ← creates state files for jobs
+│   ├── setup.sh                   ← interactive setup (run this first)
+│   ├── install.sh                 ← non-interactive: global config to ~/.claude/
+│   ├── configure.sh               ← non-interactive: project paths in .claude/
+│   ├── init-state.sh              ← non-interactive: creates state files for jobs
+│   ├── claude_google.md           ← Google Workspace / gws setup guide
 │   ├── settings.json              ← template for ~/.claude/settings.json
 │   ├── guard-secrets-global.sh    ← template for ~/.claude/scripts/
 │   └── templates/claude/          ← source templates for .claude/

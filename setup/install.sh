@@ -8,6 +8,11 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 echo "Installing global Claude Code config..."
 
+if ! command -v jq &>/dev/null; then
+  echo "ERROR: jq is required. Install it first (brew install jq / apt install jq)."
+  exit 1
+fi
+
 # Create directories
 mkdir -p ~/.claude/scripts
 
@@ -16,15 +21,31 @@ cp "$SCRIPT_DIR/guard-secrets-global.sh" ~/.claude/scripts/guard-secrets-global.
 chmod +x ~/.claude/scripts/guard-secrets-global.sh
 echo "  Copied guard-secrets-global.sh → ~/.claude/scripts/"
 
-# Generate global settings.json with correct home directory
+# Build the new settings fragment with correct home directory
 HOME_DIR="$HOME"
-sed "s|/home/user|$HOME_DIR|g" "$SCRIPT_DIR/settings.json" > ~/.claude/settings.json
-echo "  Generated settings.json → ~/.claude/settings.json (home=$HOME_DIR)"
+NEW_SETTINGS=$(jq --arg home "$HOME_DIR" '
+  del(._comment) |
+  .permissions.deny = (.permissions.deny | map(gsub("/home/user"; $home))) |
+  .hooks.PreToolUse[0].hooks[0].command = ($home + "/.claude/scripts/guard-secrets-global.sh")
+' "$SCRIPT_DIR/settings.json")
 
-# Remove the _comment field (it was just for the template)
-if command -v jq &>/dev/null; then
-  jq 'del(._comment)' ~/.claude/settings.json > ~/.claude/settings.json.tmp \
+# Merge into existing settings.json (or create if missing)
+if [ -f ~/.claude/settings.json ]; then
+  # Deep merge: existing settings take priority for scalar values,
+  # but permissions.deny and hooks.PreToolUse are replaced from template
+  jq -s '
+    .[0] as $existing |
+    .[1] as $new |
+    $existing * {
+      permissions: { deny: $new.permissions.deny },
+      hooks: { PreToolUse: $new.hooks.PreToolUse }
+    }
+  ' ~/.claude/settings.json <(echo "$NEW_SETTINGS") > ~/.claude/settings.json.tmp \
     && mv ~/.claude/settings.json.tmp ~/.claude/settings.json
+  echo "  Merged security settings into existing ~/.claude/settings.json"
+else
+  echo "$NEW_SETTINGS" > ~/.claude/settings.json
+  echo "  Created ~/.claude/settings.json"
 fi
 
 echo ""

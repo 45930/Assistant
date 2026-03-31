@@ -11,6 +11,15 @@
 set -euo pipefail
 
 RUNNER_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# macOS ships without `timeout`; use gtimeout from coreutils if available
+if ! command -v timeout &>/dev/null; then
+  if command -v gtimeout &>/dev/null; then
+    timeout() { gtimeout "$@"; }
+  else
+    die "Neither 'timeout' nor 'gtimeout' found. Install coreutils: brew install coreutils"
+  fi
+fi
 JOBS_DIR="$(dirname "$RUNNER_DIR")"
 REPO_DIR="$(dirname "$JOBS_DIR")"
 BASE_DIR="$JOBS_DIR/_base"
