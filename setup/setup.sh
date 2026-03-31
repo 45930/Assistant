@@ -49,12 +49,19 @@ ask() {
 confirm() {
   local prompt="$1"
   local default="${2:-n}"
+  local answer
   if [ "$default" = "y" ]; then
     read -rp "$prompt [Y/n]: " answer
-    [[ "${answer,,}" != "n" ]]
+    case "$answer" in
+      [nN]) return 1 ;;
+      *) return 0 ;;
+    esac
   else
     read -rp "$prompt [y/N]: " answer
-    [[ "${answer,,}" == "y" ]]
+    case "$answer" in
+      [yY]) return 0 ;;
+      *) return 1 ;;
+    esac
   fi
 }
 
@@ -418,9 +425,11 @@ if confirm "Create these directories and files?"; then
   for f in "${FILES_TO_TOUCH[@]}"; do
     touch "$f"
   done
-  for sf in "${state_lines[@]}"; do
-    touch "$sf"
-  done
+  if [ ${#state_lines[@]} -gt 0 ]; then
+    for sf in "${state_lines[@]}"; do
+      touch "$sf"
+    done
+  fi
   echo -e "${GREEN}Done.${RESET}"
 else
   echo -e "${DIM}Skipped.${RESET}"
