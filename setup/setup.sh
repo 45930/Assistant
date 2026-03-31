@@ -425,9 +425,11 @@ if confirm "Create these directories and files?"; then
   for f in "${FILES_TO_TOUCH[@]}"; do
     touch "$f"
   done
-  for sf in "${state_lines[@]}"; do
-    touch "$sf"
-  done
+  if [ ${#state_lines[@]} -gt 0 ]; then
+    for sf in "${state_lines[@]}"; do
+      touch "$sf"
+    done
+  fi
   echo -e "${GREEN}Done.${RESET}"
 else
   echo -e "${DIM}Skipped.${RESET}"
